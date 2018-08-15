@@ -1,0 +1,39 @@
+
+
+CREATE DATABASE call_list;
+
+CREATE TABLE users (id SERIAL PRIMARY KEY, first_name VARCHAR(50), email VARCHAR(50));
+
+INSERT INTO users values ('Carlos', 'carlos@gmail.com');
+
+INSERT INTO users values ('Laura', 'Laura@gmail.com');
+
+CREATE TABLE calls (id SERIAL PRIMARY KEY, phone INTEGER, date DATE, user_id REFERENCES users (id));
+
+ALTER TABLE users ADD last_name VARCHAR(50);
+
+UPDATE users SET last_name = 'Jara' where id = 1;
+
+UPDATE users SET last_name = 'Croft' where id = 2;
+
+INSERT INTO calls VALUES (123456, '2018-08-14', 2),
+(123123, '2018-08-13', 2),
+(123677, '2018-08-12', 2),
+(123666, '2018-08-12', 2),
+(123976, '2018-08-11', 2),
+(123123, '2018-08-10', 2);
+
+INSERT INTO calls VALUES (123456, '2018-08-14', 1),
+(123123, '2018-08-13', 1),
+(123677, '2018-08-12', 1),
+(123666, '2018-08-12', 1);
+
+INSERT INTO users VALUES ('Roberto', 'roberto@gmail.com');
+
+SELECT first_name, count(id) FROM calls INNER JOIN users ON user_id = id GROUP BY fisrt_name;
+
+SELECT first_name, count(id) FROM users INNER JOIN calls on id = user_id GROUP BY fisrt_name;
+
+CREATE TABLE auditoria (id SERIAL PRIMARY KEY, motivo VARCHAR(50), user_id REFERENCES users (id), call_id REFERENCES calls (id);
+
+SELECT * FROM calls WHERE user_id =1 ORDER BY date DESC;
